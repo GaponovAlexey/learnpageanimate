@@ -29,8 +29,8 @@ export const Tab = () => {
 
   return (
     <motion.nav
-      initial={false}
       animate={isOpen ? 'open' : 'closed'}
+      initial={false}
       custom={height}
       ref={containerRef}
     >

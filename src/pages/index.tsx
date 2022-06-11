@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { Tab } from '../components/tab'
 
+
 const Home: NextPage = () => {
   const [images, setimges] = useState(null)
   useEffect(() => {
@@ -15,7 +16,6 @@ const Home: NextPage = () => {
     }
     fetchImages()
   }, [])
-   
 
   return (
     <>
@@ -27,10 +27,8 @@ const Home: NextPage = () => {
       <main className='text 2xl bg-blue-200 text-blue-600 h-full'>
         {/* header */}
         <motion.div
-          drag='x'
-          dragConstraints={{ left: -100, right: 100 }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
+          transition={{ ease: 'easeOut', duration: 2 }}
+          animate={{ x: [100,50,40,30, 20, 10], y: [100, 50,40,30,10], opacity: 1 }}
           className='bg-red-200 grid p-5 grid-cols-2 justify-between '
         >
           <h1>logo</h1>
@@ -40,9 +38,15 @@ const Home: NextPage = () => {
             <motion.div className=''>singiup</motion.div>
           </motion.div>
         </motion.div>
-        <Tab />
+        <motion.div>
+          <Tab />
+        </motion.div>
         {/* one */}
-        <motion.div className='bg-red-300 mt-40 m-5 text-center  grid h-1/3 grid-cols-4 gap-10 p-20 '>
+        <motion.div
+          animate={{ opacity: 0 }}
+          transition={{ ease: [0.17, 0.67, 0.83, 0.67] }}
+          className='bg-red-300 mt-40 m-5 text-center  grid h-1/3 grid-cols-4 gap-10 p-20 '
+        >
           <motion.div className='bg-gray-200'>one</motion.div>
           <motion.div className=' bg-green-200'>tow</motion.div>
           <motion.div className='bg-slate-200'>three</motion.div>
