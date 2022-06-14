@@ -1,26 +1,32 @@
 import { motion, useTransform, useViewportScroll } from 'framer-motion'
 import type { NextPage } from 'next'
 import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { Tab } from '../components/tab'
 
-const Home: NextPage = () => {
-  const [images, setimges] = useState([])
-  const scrollRef = useRef(null)
-  console.log(images)
+export const getServerSideProps = async () => {
+  const res = await fetch('https://jsonplaceholder.typicode.com/photos')
+  const data = await res.json().then((res) => res.slice(0, 10))
+  for (let i = 0; i < 3; i++) {
+    data[i]
+  }
 
-  useEffect(() => {
-    const fetchImages = async () => {
-      const res = await fetch('https://jsonplaceholder.typicode.com/photos')
-      const data = await res.json()
-      setimges(data.slice(0, 10))
-    }
-    fetchImages()
-  }, [])
-  const ViewImage = (
-    <Image src='/1.jpg' layout='fixed' width={'100px'} height='50px' />
-  )
+  return {
+    props: {
+      data,
+    },
+  }
+}
+
+const Home: NextPage = ({ data }: any) => {
+  const [images, setimges] = useState([data])
+
+  const newData = images?.map(([t1, t2]) => <img src={t2.url} width='400px' />)
+
+  console.log(newData)
   // NOTE
+  const scrollRef = useRef(null)
+
   const { scrollY } = useViewportScroll()
   const marginTop = useTransform(scrollY, [4, 10], [0, 1])
   return (
@@ -39,7 +45,7 @@ const Home: NextPage = () => {
           <Tab />
         </motion.div>
         {/* img */}
-        {ViewImage}
+        {newData}
         {/* one */}
         <motion.div className='bg-red-300 mt-40 m-5 text-center  grid h-1/3 grid-cols-4 gap-10 p-20 '>
           <motion.div className='bg-gray-200'>one</motion.div>
