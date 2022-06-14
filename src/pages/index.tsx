@@ -1,6 +1,5 @@
 import { motion, useTransform, useViewportScroll } from 'framer-motion'
 import type { NextPage } from 'next'
-import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import { Tab } from '../components/tab'
@@ -13,21 +12,20 @@ const Home: NextPage = () => {
   useEffect(() => {
     const fetchImages = async () => {
       const res = await fetch('https://jsonplaceholder.typicode.com/photos')
-      const data = await JSON.parse(await res.text())
+      const data = await res.json()
       setimges(data.slice(0, 10))
     }
     fetchImages()
   }, [])
-
+  const ViewImage = (
+    <Image src='/1.jpg' layout='fixed' width={'100px'} height='50px' />
+  )
+  // NOTE
   const { scrollY } = useViewportScroll()
   const marginTop = useTransform(scrollY, [4, 10], [0, 1])
   return (
     <>
-      <Head>
-        <title>Create Next App</title>
-        <link rel='icon' href='/favicon.ico' />
-      </Head>
-      <main className='text 2xl bg-blue-200 text-blue-600 h-full'>
+      <main className=' bg-blue-200 text-blue-600 h-full'>
         {/* header */}
         <motion.div className='bg-red-200 grid p-5 grid-cols-2 justify-between '>
           <h1>logo</h1>
@@ -40,6 +38,8 @@ const Home: NextPage = () => {
         <motion.div>
           <Tab />
         </motion.div>
+        {/* img */}
+        {ViewImage}
         {/* one */}
         <motion.div className='bg-red-300 mt-40 m-5 text-center  grid h-1/3 grid-cols-4 gap-10 p-20 '>
           <motion.div className='bg-gray-200'>one</motion.div>
@@ -54,7 +54,7 @@ const Home: NextPage = () => {
           initial={{ opacity: 0, x: -1000 }}
           whileInView={{ animation: 'backwards', opacity: 1, x: 0 }}
           viewport={{ root: scrollRef }}
-          transition={{ delay: 1 }}
+          transition={{ delay: 0.2 }}
           className='m-5 mt-40'
         >
           <motion.div className='bg-gray-200 mt-10 p-10'>TWOOO</motion.div>
@@ -64,19 +64,12 @@ const Home: NextPage = () => {
         </motion.div>
         {/* img */}
         <motion.div
-          initial={{ opacity: 0, x: -1000 }}
+          initial={{ opacity: 0, x: -100 }}
           whileInView={{ animation: 'fadeIn', opacity: 1, x: 0 }}
           viewport={{ root: scrollRef }}
           transition={{ delay: 0.2 }}
           className=' m-40 text-center'
-        >
-          <Image
-            src={images[0].url}
-            layout='fixed'
-            width={'1000px'}
-            height='500px'
-          />
-        </motion.div>
+        ></motion.div>
         {/* three */}
         <motion.div
           initial={{ opacity: 0, x: -100 }}
