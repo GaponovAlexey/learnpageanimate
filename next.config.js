@@ -1,7 +1,6 @@
 module.exports = {
   images: {
-    reactStrictMode: true,
-    domains: ['https://jsonplaceholder.typicode.com/photos', 'localhost'],
-    disableStaticImages: true,
+    domains: ['http://localhost:3000/'],
+    formats: ['image/avif', 'image/webp'],
   },
 }
