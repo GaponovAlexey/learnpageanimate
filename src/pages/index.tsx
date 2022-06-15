@@ -2,14 +2,13 @@ import { motion, useTransform, useViewportScroll } from 'framer-motion'
 import type { NextPage } from 'next'
 import Image from 'next/image'
 import { useRef, useState } from 'react'
-import { Tab } from '../components/tab'
+import { useSelector } from 'react-redux'
 
 export const getServerSideProps = async () => {
   const res = await fetch('https://jsonplaceholder.typicode.com/photos')
-  const data = await res.json().then((res) => res.slice(0, 10))
-  for (let i = 0; i < 3; i++) {
-    data[i]
-  }
+  const dataJson = await res.json()
+  const data = dataJson.slice(0, 10)
+  return { props: { data } }
 
   return {
     props: {
@@ -19,16 +18,20 @@ export const getServerSideProps = async () => {
 }
 
 const Home: NextPage = ({ data }: any) => {
-  const [images, setimges] = useState([data])
+  const [allData, setData] = useState(data)
+  const redus = useSelector((state: any) => state.todos)
+  console.log(redus)
 
-  const newData = images?.map(([t1, t2]) => <img src={t2.url} width='400px' />)
-
-  console.log(newData)
   // NOTE
   const scrollRef = useRef(null)
 
   const { scrollY } = useViewportScroll()
   const marginTop = useTransform(scrollY, [4, 10], [0, 1])
+
+  // const newData = null;
+  const newData = allData.map((e: any, i: any) => (
+    <img key={i} src={e.url} width='120px' height='120px' />
+  ))
   return (
     <>
       <main className=' bg-blue-200 text-blue-600 h-full'>
@@ -41,11 +44,9 @@ const Home: NextPage = ({ data }: any) => {
             <motion.div className=''>singiup</motion.div>
           </motion.div>
         </motion.div>
-        <motion.div>
-          <Tab />
-        </motion.div>
         {/* img */}
-        {newData}
+        <Image src='/1.jpg' width={100} height={100} />
+        <div className='flex flex-wrap justify-between'>{newData}</div>
         {/* one */}
         <motion.div className='bg-red-300 mt-40 m-5 text-center  grid h-1/3 grid-cols-4 gap-10 p-20 '>
           <motion.div className='bg-gray-200'>one</motion.div>
@@ -75,7 +76,9 @@ const Home: NextPage = ({ data }: any) => {
           viewport={{ root: scrollRef }}
           transition={{ delay: 0.2 }}
           className=' m-40 text-center'
-        ></motion.div>
+        >
+          <img src='/1.jpg' alt='two' width='400px' height='400px' />
+        </motion.div>
         {/* three */}
         <motion.div
           initial={{ opacity: 0, x: -100 }}
@@ -101,29 +104,6 @@ const Home: NextPage = ({ data }: any) => {
           <motion.div className=' bg-green-200'>tow</motion.div>
           <motion.div className='bg-slate-200'>three</motion.div>
           <motion.div className='bg-green-200'>four</motion.div>
-        </motion.div>
-        {/* img2 */}
-        <motion.div
-          initial={{ opacity: 0, x: -100 }}
-          whileInView={{ animation: 'fadeIn', opacity: 1, x: 0 }}
-          viewport={{ root: scrollRef }}
-          transition={{ delay: 0.2 }}
-          className=' m-40 text-center'
-        >
-          <Image src='/1.jpg' layout='fixed' width={'1000px'} height='500px' />
-        </motion.div>
-        {/* footer */}
-        <motion.div
-          initial={{ opacity: 0, x: -100 }}
-          whileInView={{ animation: 'fadeIn', opacity: 1, x: 0 }}
-          viewport={{ root: scrollRef }}
-          transition={{ delay: 0.2 }}
-          className='m-5 mt-40'
-        >
-          <motion.div className='bg-gray-200 mt-10 p-10'>one</motion.div>
-          <motion.div className=' bg-green-200 mt-10 p-10'>tow</motion.div>
-          <motion.div className='bg-slate-200 mt-10 p-10'>three</motion.div>
-          <motion.div className='bg-green-200 mt-10 p-10'>four</motion.div>
         </motion.div>
       </main>
       <footer className='text-center p-2'>footer</footer>
