@@ -1,8 +1,7 @@
-const nextConfig = {
-  reactStrictMode: true,
+module.exports = {
   images: {
-    domains: ['example.com'],
+    reactStrictMode: true,
+    domains: ['https://jsonplaceholder.typicode.com/photos', 'localhost'],
+    disableStaticImages: true,
   },
 }
-
-module.exports = nextConfig

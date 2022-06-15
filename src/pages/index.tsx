@@ -3,18 +3,7 @@ import type { NextPage } from 'next'
 import Image from 'next/image'
 import { useRef, useState } from 'react'
 
-export const getServerSideProps = async () => {
-  const res = await fetch('https://jsonplaceholder.typicode.com/photos')
-  const data = await res.json().then((res) => res.slice(0, 10))
-  return {
-    props: {
-      data,
-    },
-  }
-}
-
 const Home: NextPage = ({ data }: any) => {
-  const [isServer, setIsServer] = useState(typeof window === 'undefined')
   // NOTE
   const scrollRef = useRef(null)
 
@@ -77,7 +66,13 @@ const Home: NextPage = ({ data }: any) => {
           transition={{ delay: 0.2 }}
           className=' m-40 text-center'
         >
-          <img src='/1.jpg' alt='two' width='400px' height='400px' />
+          <Image
+            src='/1.jpg'
+            alt='two'
+            width='400px'
+            height='400px'
+            className="h-8 w-8 rounded-full"
+          />
         </motion.div>
         {/* three */}
         <motion.div
@@ -95,7 +90,7 @@ const Home: NextPage = ({ data }: any) => {
         {/* four */}
         <motion.div
           initial={{ opacity: 0, x: -100 }}
-          whileInView={{   opacity: 1, x: 0 }}
+          whileInView={{ opacity: 1, x: 0 }}
           viewport={{ root: scrollRef }}
           transition={{ delay: 0.4 }}
           className='bg-red-300 mt-40 m-5 text-center  grid h-1/3 grid-cols-4 gap-10 p-20 '
@@ -112,3 +107,13 @@ const Home: NextPage = ({ data }: any) => {
 }
 
 export default Home
+
+export const getServerSideProps = async () => {
+  const res = await fetch('https://jsonplaceholder.typicode.com/photos')
+  const data = await res.json().then((res) => res.slice(0, 10))
+  return {
+    props: {
+      data,
+    },
+  }
+}
