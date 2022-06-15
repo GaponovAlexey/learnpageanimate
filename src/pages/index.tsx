@@ -2,14 +2,10 @@ import { motion, useTransform, useViewportScroll } from 'framer-motion'
 import type { NextPage } from 'next'
 import Image from 'next/image'
 import { useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
 
 export const getServerSideProps = async () => {
   const res = await fetch('https://jsonplaceholder.typicode.com/photos')
-  const dataJson = await res.json()
-  const data = dataJson.slice(0, 10)
-  return { props: { data } }
-
+  const data = await res.json().then((res) => res.slice(0, 10))
   return {
     props: {
       data,
@@ -18,10 +14,7 @@ export const getServerSideProps = async () => {
 }
 
 const Home: NextPage = ({ data }: any) => {
-  const [allData, setData] = useState(data)
-  const redus = useSelector((state: any) => state.todos)
-  console.log(redus)
-
+  const [isServer, setIsServer] = useState(typeof window === 'undefined')
   // NOTE
   const scrollRef = useRef(null)
 
@@ -29,8 +22,16 @@ const Home: NextPage = ({ data }: any) => {
   const marginTop = useTransform(scrollY, [4, 10], [0, 1])
 
   // const newData = null;
-  const newData = allData.map((e: any, i: any) => (
-    <img key={i} src={e.url} width='120px' height='120px' />
+  const newData = data.map((e: any, i: any) => (
+    <motion.img
+      initial={{ opacity: 0, y: -100 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.06 * i }}
+      key={i}
+      src={e.url}
+      width='120px'
+      height='120px'
+    />
   ))
   return (
     <>
@@ -45,7 +46,6 @@ const Home: NextPage = ({ data }: any) => {
           </motion.div>
         </motion.div>
         {/* img */}
-        <Image src='/1.jpg' width={100} height={100} />
         <div className='flex flex-wrap justify-between'>{newData}</div>
         {/* one */}
         <motion.div className='bg-red-300 mt-40 m-5 text-center  grid h-1/3 grid-cols-4 gap-10 p-20 '>
@@ -58,8 +58,8 @@ const Home: NextPage = ({ data }: any) => {
         {/* two */}
         <motion.div
           style={{ scaleX: marginTop }}
-          initial={{ opacity: 0, x: -1000 }}
-          whileInView={{ animation: 'backwards', opacity: 1, x: 0 }}
+          initial={{ opacity: 0, x: -100 }}
+          whileInView={{ opacity: 1, x: 0 }}
           viewport={{ root: scrollRef }}
           transition={{ delay: 0.2 }}
           className='m-5 mt-40'
@@ -72,7 +72,7 @@ const Home: NextPage = ({ data }: any) => {
         {/* img */}
         <motion.div
           initial={{ opacity: 0, x: -100 }}
-          whileInView={{ animation: 'fadeIn', opacity: 1, x: 0 }}
+          whileInView={{ opacity: 1, x: 0 }}
           viewport={{ root: scrollRef }}
           transition={{ delay: 0.2 }}
           className=' m-40 text-center'
@@ -82,7 +82,7 @@ const Home: NextPage = ({ data }: any) => {
         {/* three */}
         <motion.div
           initial={{ opacity: 0, x: -100 }}
-          whileInView={{ animation: 'fadeIn', opacity: 1, x: 0 }}
+          whileInView={{ opacity: 1, x: 0 }}
           viewport={{ root: scrollRef }}
           transition={{ delay: 0.4 }}
           className='m-5 mt-40'
@@ -95,7 +95,7 @@ const Home: NextPage = ({ data }: any) => {
         {/* four */}
         <motion.div
           initial={{ opacity: 0, x: -100 }}
-          whileInView={{ animation: 'fadeIn', opacity: 1, x: 0 }}
+          whileInView={{   opacity: 1, x: 0 }}
           viewport={{ root: scrollRef }}
           transition={{ delay: 0.4 }}
           className='bg-red-300 mt-40 m-5 text-center  grid h-1/3 grid-cols-4 gap-10 p-20 '
