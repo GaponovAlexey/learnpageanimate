@@ -1,7 +1,7 @@
 import { motion, useTransform, useViewportScroll } from 'framer-motion'
 import type { NextPage } from 'next'
 import Image from 'next/image'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 
 const Home: NextPage = ({ data }: any) => {
   // NOTE
@@ -25,15 +25,6 @@ const Home: NextPage = ({ data }: any) => {
   return (
     <>
       <main className=' bg-blue-200 text-blue-600 h-full'>
-        {/* header */}
-        <motion.div className='bg-red-200 grid p-5 grid-cols-2 justify-between '>
-          <h1>logo</h1>
-          <motion.div className='flex flex-wrap  justify-end  bg-green-200'>
-            <motion.div className='pr-10'>ico</motion.div>
-            <motion.div className='pr-10'>singiin</motion.div>
-            <motion.div className=''>singiup</motion.div>
-          </motion.div>
-        </motion.div>
         {/* img */}
         <div className='flex flex-wrap justify-between'>{newData}</div>
         {/* one */}
@@ -71,7 +62,7 @@ const Home: NextPage = ({ data }: any) => {
             alt='two'
             width='400px'
             height='400px'
-            className="h-8 w-8 rounded-full"
+            className='h-8 w-8 rounded-full'
           />
         </motion.div>
         {/* three */}
@@ -101,7 +92,6 @@ const Home: NextPage = ({ data }: any) => {
           <motion.div className='bg-green-200'>four</motion.div>
         </motion.div>
       </main>
-      <footer className='text-center p-2'>footer</footer>
     </>
   )
 }
