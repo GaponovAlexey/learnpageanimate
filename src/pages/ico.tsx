@@ -5,12 +5,11 @@ import Filter from '../components/layout/Filter'
 import { TypePhoto } from '../components/type'
 
 const Ico: NextPage<TypePhoto> = ({ data }: any) => {
-  const [popular, setPopular] = useState(data)
 
   const [filtered, setFiltered] = useState(data)
-  console.log(filtered)
+  
 
-  const [activeGenre, setActiveGenre] = useState(0)
+  
 
   return (
     <>
@@ -20,9 +19,7 @@ const Ico: NextPage<TypePhoto> = ({ data }: any) => {
       <div className='m-[2%_10%]'>
         <div className='flex'>
           <Filter
-            popular={popular}
-            activeGenre={activeGenre}
-            setActiveGenre={setActiveGenre}
+            data={data}
             setFiltered={setFiltered}
           />
         </div>
@@ -51,7 +48,7 @@ export default Ico
 
 export const getServerSideProps = async () => {
   const res = await fetch('https://jsonplaceholder.typicode.com/photos')
-  const data = await res.json()
+  const data = await res.json().then((res) => res.slice(0, 200))
   return {
     props: {
       data,

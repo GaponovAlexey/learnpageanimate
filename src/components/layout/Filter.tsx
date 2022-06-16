@@ -1,17 +1,16 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { TypePhoto } from '../type'
 
-const Filter = ({ popular, setFiltered, activeGenre, setActiveGenre }: any) => {
+const Filter = ({ data, setFiltered }: any) => {
+  const [activeGenre, setActiveGenre] = useState(0)
+
   useEffect(() => {
-    if (activeGenre === 0) {
-      setFiltered(popular)
-      return
+    {
+      activeGenre === 0
+        ? setFiltered(data)
+        : setFiltered(data.filter((e: TypePhoto) => e.albumId === activeGenre))
     }
-    const filtered = popular.filter(
-      (e: TypePhoto | any) => e.albumId === activeGenre
-    )
-    setActiveGenre(filtered)
-  }, [])
+  }, [activeGenre])
 
   //style
   const style = 'mr-4 px-2 bg-green-200 rounded-md hover:bg-red-700'
