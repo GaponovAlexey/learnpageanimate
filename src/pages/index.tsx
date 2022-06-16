@@ -27,7 +27,10 @@ const Home: NextPage = ({ data }: any) => {
         {/* img */}
         <div className='flex flex-wrap justify-between'>{newData}</div>
         {/* one */}
-        <motion.div className='bg-red-300 mt-40 m-5 text-center  grid h-1/3 grid-cols-4 gap-10 p-20 '>
+        <motion.div
+          layout
+          className='bg-red-300 mt-40 m-5 text-center  grid h-1/3 grid-cols-4 gap-10 p-20 '
+        >
           <motion.div className='bg-gray-200'>one</motion.div>
           <motion.div className=' bg-green-200'>tow</motion.div>
           <motion.div className='bg-slate-200'>three</motion.div>
@@ -36,6 +39,7 @@ const Home: NextPage = ({ data }: any) => {
 
         {/* two */}
         <motion.div
+          layout
           style={{ scaleX: marginTop }}
           initial={{ opacity: 0, x: -100 }}
           whileInView={{ opacity: 1, x: 0 }}
