@@ -1,6 +1,5 @@
 import { motion, useTransform, useViewportScroll } from 'framer-motion'
 import type { NextPage } from 'next'
-import Image from 'next/image'
 import { useRef } from 'react'
 
 const Home: NextPage = ({ data }: any) => {
@@ -57,7 +56,7 @@ const Home: NextPage = ({ data }: any) => {
           transition={{ delay: 0.2 }}
           className=' m-40 text-center'
         >
-          <Image
+          <img
             src='/1.jpg'
             alt='two'
             width='400px'
